@@ -15,14 +15,17 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  email String
+  email String @unique
   hash  String
 
   first_name String?
   last_name  String?
+  bookmarks  Bookmark[]
+
+  @@map("users")
 }
 
-model Bookmart {
+model Bookmark {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id         Int      @id @default(autoincrement())
@@ -30,4 +33,9 @@ model Bookmart {
   title       String
   description String?
   link        String
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  @@map("bookmarks")
 }
